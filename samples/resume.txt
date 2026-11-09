@@ -1,0 +1,18 @@
+Jordan Lee
+jordan.lee@example.com | 555-0100 | Waterloo, ON
+
+EDUCATION
+B.A.Sc. Computer Engineering, Example University, 2023 - 2028
+
+Work Experience
+Software Developer Co-op, Acme Robotics (Jan - Apr 2026)
+- Built REST APIs in Python and Flask; wrote unit tests with pytest.
+- Wrote embedded C++ drivers for sensor boards on a Raspberry Pi.
+- Used Git and Docker daily; deployed services to AWS.
+
+P R O J E C T S
+Course Planner: JavaScript web app with React and PostgreSQL.
+Line-following robot using machine
+learning for path detection.
+
+Technical Skills: Python, C++, JavaScript, SQL, Git, Linux

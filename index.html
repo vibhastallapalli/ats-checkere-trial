@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Co-op Résumé Checker</title>
+<style>
+  :root { --bg:#f7f7f5; --card:#fff; --ink:#1d1d1b; --mute:#5f5f5a; --line:#dcdcd6; --ok:#1e7a46; --warn:#a15c00; --bad:#b3261e; --hl:#fff1a8; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#161615; --card:#20201e; --ink:#ececea; --mute:#a3a39d; --line:#3a3a37; --ok:#5fc48a; --warn:#e6a54a; --bad:#f08a80; --hl:#5a4d00; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 system-ui, sans-serif; }
+  main { max-width:1100px; margin:0 auto; padding:24px 16px 64px; }
+  h1 { font-size:1.5rem; margin:0 0 4px; } h2 { font-size:1.1rem; margin:0 0 8px; } h3 { font-size:1rem; margin:16px 0 6px; }
+  p.lead, .note { color:var(--mute); margin:0 0 16px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:800px) { .grid { grid-template-columns:1fr; } }
+  section { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:16px; margin-bottom:16px; min-width:0; }
+  label { display:block; font-weight:600; margin:10px 0 4px; }
+  textarea { width:100%; font:13px/1.45 ui-monospace, Consolas, monospace; color:var(--ink); background:var(--bg); border:1px solid var(--line); border-radius:6px; padding:8px; resize:vertical; }
+  #resume { min-height:340px; } #job { min-height:200px; } #extra { min-height:60px; }
+  .row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  button, .file { font:inherit; padding:6px 12px; border:1px solid var(--line); border-radius:6px; background:var(--card); color:var(--ink); cursor:pointer; }
+  .file input { display:none; }
+  .status { font-size:13px; color:var(--mute); }
+  .alert { border-left:4px solid var(--warn); padding:8px 12px; background:var(--bg); margin:8px 0; }
+  .alert.bad { border-color:var(--bad); }
+  .cov { font-size:2rem; font-weight:700; }
+  table { width:100%; border-collapse:collapse; font-size:14px; } td, th { text-align:left; vertical-align:top; padding:6px; border-top:1px solid var(--line); }
+  td.term { white-space:nowrap; font-weight:600; } mark { background:var(--hl); color:inherit; }
+  .chips span { display:inline-block; border:1px solid var(--bad); color:var(--bad); border-radius:12px; padding:1px 10px; margin:3px; font-size:13px; }
+  .sec { padding:8px 0; border-top:1px solid var(--line); } .sec b { display:inline-block; width:6.5em; }
+  .ok { color:var(--ok); } .warn { color:var(--warn); } .missing { color:var(--bad); }
+  details { margin-top:8px; } summary { cursor:pointer; color:var(--mute); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Co-op Résumé Checker</h1>
+  <p class="lead">Runs entirely on this computer. Nothing is uploaded, and the page makes no outside requests: no ads, no analytics. This is a self-check tool. It does not reproduce Workday, Greenhouse or any other applicant tracking system, and it cannot predict whether you pass a screen.</p>
+
+  <div class="grid">
+    <section>
+      <h2>1. Résumé</h2>
+      <div class="row">
+        <label class="file">Choose PDF… <input type="file" id="pdf" accept="application/pdf,.pdf"></label>
+        <button type="button" id="sample">Load sample</button>
+        <span class="status" id="pdfStatus">Or paste text below.</span>
+      </div>
+      <div id="pdfAlerts"></div>
+      <label for="resume">Extracted / pasted text (editable)</label>
+      <textarea id="resume" spellcheck="false" placeholder="Pick a PDF to preview its text layer, or paste your résumé text here."></textarea>
+      <p class="note">Read the extracted text closely. Missing words, merged columns or sections in the wrong order here are what a parser is likely to see too.</p>
+    </section>
+
+    <section>
+      <h2>2. Job posting</h2>
+      <label for="job">Paste the job description</label>
+      <textarea id="job" spellcheck="false" placeholder="Paste the posting text here."></textarea>
+      <label for="extra">Extra terms to check (comma or one per line)</label>
+      <textarea id="extra" spellcheck="false" placeholder="e.g. Go, firmware, HVAC"></textarea>
+      <p class="note">Terms come from a built-in list of common skills found in the posting, plus anything you add here. Exact terms only, so "JS" does not count as "JavaScript".</p>
+    </section>
+  </div>
+
+  <section>
+    <h2>3. Keyword match</h2>
+    <div id="match"><p class="note">Add résumé text and a job posting to see matches.</p></div>
+  </section>
+
+  <section>
+    <h2>4. Section headings</h2>
+    <div id="sections"><p class="note">Add résumé text to check headings.</p></div>
+    <details><summary>How this check works</summary>
+      <p class="note">Each line is lower-cased and stripped of punctuation. <b class="ok">Found</b> means a line is exactly a common heading name (for example "EDUCATION" or "Technical Skills:"). <b class="warn">Check</b> means the word only appears inside other text, or is letter-spaced like "S K I L L S". <b class="missing">Not found</b> means none of the names appear. The line number refers to the text box above, so you can confirm it yourself.</p>
+    </details>
+  </section>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+Software Engineering Co-op (Fall 2027)
+
+We are looking for a co-op student to join our platform team.
+
+Requirements:
+- Experience with Java, C++ or Python
+- SQL and relational databases
+- Familiarity with Kubernetes and Docker
+- Exposure to machine learning
+- Building REST APIs
+- Git and CI/CD workflows
+- Strong communication skills and comfort working in an Agile team
+
+Nice to have: TypeScript, AWS, Linux.
